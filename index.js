@@ -3,6 +3,7 @@ const result = document.getElementById("result")
 const weatherForm = document.getElementById("weather-form")
 const cityInput = document.getElementById("city-input")
 const weatherEffects = document.getElementById("weather-effects")
+let latestRequestId = 0;
 
 const weatherClassMap = {
     Rain: "weather-rain",
@@ -26,12 +27,16 @@ weatherForm.addEventListener("submit", function(e) {
 })
 
 async function getWeather(city) {
+    const requestId = ++latestRequestId;
     const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
     result.innerHTML = "Loading ...."
     triggerResultAnimation();
     try {
         const response = await fetch(url);
         const data = await response.json();
+
+        if (requestId !== latestRequestId) return;
+        
         if (data.cod === "404") {
             result.innerHTML = `City Not Found`
             triggerResultAnimation();
