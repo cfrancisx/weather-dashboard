@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="weather-effects">
+        
+    </div>
+    <div id="container">
+        <header id="app-header">
+            <span id="app-icon">✦</span>
+            <h1>Aurora</h1>
+            <p id="tagline">Check the sky, anywhere on Earth</p>
+        </header>
+
+        <form id="weather-form">
+            <input type="text" id="city-input" placeholder="Enter city name" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <div id="result"></div>
+
+        <footer id="app-footer">
+            <p>Powered by OpenWeatherMap</p>
+        </footer>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>
