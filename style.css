@@ -83,17 +83,13 @@ body::after {
             transparent 3px
         ),
         linear-gradient(rgba(7, 8, 13, 0.45), rgba(7, 8, 13, 0.45));
-    opacity: 0.9;
+    opacity: 0.7;
 }
 
 @keyframes twinkle {
     0%, 100% { opacity: 0.3; }
     50%      { opacity: 0.75; }
 }
-
-/* ============================================
-   GLASS PANEL
-   ============================================ */
 
 #container {
     position: relative;
@@ -117,10 +113,6 @@ body::after {
     to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ============================================
-   WEATHER EFFECTS LAYER
-   ============================================ */
-
 #weather-effects {
     position: fixed;
     inset: 0;
@@ -130,8 +122,6 @@ body::after {
     transition: background-color 0.6s ease;
     background-color: transparent;
 }
-
-/* ---------- RAIN (individual falling drops) ---------- */
 
 .weather-rain {
     background-color: rgba(50, 70, 100, 0.35);
@@ -154,8 +144,6 @@ body::after {
     from { background-position: 0 -180px; }
     to   { background-position: 0 0; }
 }
-
-/* ---------- THUNDERSTORM (fast rain + flash + shake) ---------- */
 
 .weather-thunderstorm {
     background-color: rgba(35, 30, 50, 0.5);
@@ -202,8 +190,6 @@ body::after {
     93%  { transform: translate(0, 0); }
 }
 
-/* ---------- SNOW (drifting flakes) ---------- */
-
 .weather-snow {
     background-color: rgba(120, 140, 170, 0.22);
     background-image:
@@ -227,8 +213,6 @@ body::after {
     75%  { background-position: 2% 90%; }
     100% { background-position: 0% 120%; }
 }
-
-/* ---------- CLEAR (sun glow + rotating rays) ---------- */
 
 .weather-clear {
     background-color: rgba(120, 90, 40, 0.22);
@@ -330,8 +314,6 @@ body::after {
     to   { transform: translateX(-50%) rotate(360deg); }
 }
 
-/* ---------- CLOUDS (soft drifting shapes) ---------- */
-
 .weather-clouds {
     background-color: rgba(70, 75, 90, 0.28);
     background:
@@ -345,10 +327,6 @@ body::after {
     from { transform: translateX(-3%); }
     to   { transform: translateX(3%); }
 }
-
-/* ============================================
-   HEADER
-   ============================================ */
 
 #app-header {
     text-align: center;
@@ -382,10 +360,6 @@ body::after {
     color: var(--text-dim);
     letter-spacing: 0.02em;
 }
-
-/* ============================================
-   FORM
-   ============================================ */
 
 #weather-form {
     display: flex;
@@ -438,10 +412,6 @@ body::after {
 #weather-form button:active {
     transform: translateY(0);
 }
-
-/* ============================================
-   RESULT
-   ============================================ */
 
 #result {
     margin-top: 28px;
@@ -532,6 +502,9 @@ body::after {
     #container {
         padding: 28px 22px;
         border-radius: 16px;
+        background: rgba(255, 255, 255, 0.02);
+        -webkit-backdrop-filter: blur(6px);
+        backdrop-filter: blur(6px);
     }
     #weather-form {
         flex-direction: column;
