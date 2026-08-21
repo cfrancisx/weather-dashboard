@@ -3,6 +3,10 @@ const result = document.getElementById("result")
 const weatherForm = document.getElementById("weather-form")
 const cityInput = document.getElementById("city-input")
 const weatherEffects = document.getElementById("weather-effects")
+const unsplashKey = "4TO6wZrhOklH3vnvojkPUvaQxvTkoTo9Rbq0CFxuDjU"
+const cityDescription = document.getElementById("city-description")
+const suggestionsList = document.getElementById("suggestions-list")
+let debounceTimer;
 let latestRequestId = 0;
 
 const weatherClassMap = {
@@ -44,11 +48,79 @@ async function getWeather(city) {
         }
         console.log(data)
         updateWeatherEffect(data.weather[0].main)
+        getCityDescription(city)
+        getCityPhoto(city)
         result.innerHTML = `${data.name}: ${data.main.temp}°C, ${data.weather[0].description}`
         triggerResultAnimation();
     } catch (error) {
         console.log(error)
     }
+}
+
+async function getCityDescription(city) {
+    const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${city}`
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        cityDescription.innerHTML = `${data.extract}`
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+cityInput.addEventListener("input", function() {
+    clearTimeout(debounceTimer)
+
+    const query = cityInput.value
+
+    if (query === "") {
+        suggestionsList.innerHTML =""
+        return;
+    }
+
+    debounceTimer = setTimeout(function() {
+        getSuggestions(query)
+    }, 300)
+})
+
+async function getSuggestions(query) {
+    const url = `https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        suggestionsList.innerHTML = ""
+
+        data.forEach(function (entry) {
+            const li = document.createElement("li")
+            li.textContent = `${entry.name}, ${entry.country}`
+
+            li.addEventListener("click", function() {
+                cityInput.value = entry.name
+                suggestionsList.innerHTML = ""
+                getWeather(entry.name)
+            })
+            suggestionsList.appendChild(li)
+        })
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+async function getCityPhoto(city) {
+    const url =`https://api.unsplash.com/search/photos?query=${city}&client_id=${unsplashKey}`
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (data.results.length === 0) {
+            return;
+        }
+            const photoUrl = data.results[0].urls.regular;
+            document.body.style.backgroundImage = `url("${photoUrl}")`;
+        } catch (error) {
+            console.log(error)
+        }
 }
 
 function updateWeatherEffect(condition) {
