@@ -236,10 +236,36 @@ body::after {
     line-height: 1.6;
     color: var(--text);
     text-align: left;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 #city-description:empty {
     display: none;
+}
+
+#city-description.expanded {
+    -webkit-line-clamp: unset;
+}
+
+#read-more-btn {
+    display: none;
+    margin-top: 6px;
+    background: none;
+    border: none;
+    color: var(--aurora-teal);
+    font-family: var(--sans);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    padding: 0;
+}
+
+#read-more-btn:hover {
+    text-decoration: underline;
 }
 
 #weather-form {

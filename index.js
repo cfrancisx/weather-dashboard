@@ -6,8 +6,18 @@ const weatherEffects = document.getElementById("weather-effects")
 const unsplashKey = "4TO6wZrhOklH3vnvojkPUvaQxvTkoTo9Rbq0CFxuDjU"
 const cityDescription = document.getElementById("city-description")
 const suggestionsList = document.getElementById("suggestions-list")
+const readMoreBtn = document.getElementById("read-more-btn")
 let debounceTimer;
 let latestRequestId = 0;
+
+readMoreBtn.addEventListener("click", function() {
+    cityDescription.classList.toggle("expanded")
+    if (cityDescription.classList.contains("expanded")) {
+        readMoreBtn.textContent = "Show less"
+    } else {
+        readMoreBtn.textContent = "Read more"
+    }
+})
 
 const weatherClassMap = {
     Rain: "weather-rain",
@@ -63,6 +73,10 @@ async function getCityDescription(city) {
         const response = await fetch(url);
         const data = await response.json();
         cityDescription.innerHTML = `${data.extract}`
+        cityDescription.innerHTML = `${data.extract}`
+        cityDescription.classList.remove("expanded")
+        readMoreBtn.textContent = "Read more"
+        readMoreBtn.style.display = "inline-block"
     } catch (error) {
         console.log(error)
     }
