@@ -33,14 +33,14 @@ html, body {
 body {
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
     padding: 24px;
     font-family: var(--sans);
     color: var(--text);
     position: relative;
-    overflow: hidden;
-    background: var(--night-950);
+    overflow-x: hidden;
+    overflow-y: auto;
     background-color: var(--night-950);
     background-size: cover;
     background-position: center;
@@ -92,6 +92,8 @@ body::after {
 }
 
 #container {
+    margin-top: auto;
+    margin-bottom: auto;
     position: relative;
     z-index: 1;
     width: 100%;
