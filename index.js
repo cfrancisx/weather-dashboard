@@ -67,6 +67,28 @@ async function getWeather(city) {
     }
 }
 
+async function getWeatherByCoords(lat, lon, displayName) {
+    const requestId = ++latestRequestId;
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=metric`
+    result.innerHTML = `Loading ....`
+    triggerResultAnimation();
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (requestId !== latestRequestId) 
+            return;
+
+        updateWeatherEffect(data.weather[0].main)
+        getCityDescription(displayName)
+        getCityPhoto(displayName)
+        result.innerHTML = `${data.name}: ${data.main.temp}°C, ${data.weather[0].description}`
+        triggerResultAnimation();
+    } catch (error) {
+    console.log(error)
+    }
+}
+
 async function getCityDescription(city) {
     const url = `https://en.wikipedia.org/api/rest_v1/page/summary/${city}`
     try {
@@ -112,7 +134,7 @@ async function getSuggestions(query) {
             li.addEventListener("click", function() {
                 cityInput.value = entry.name
                 suggestionsList.innerHTML = ""
-                getWeather(entry.name)
+                getWeatherByCoords(entry.lat, entry.lon, entry.name)
             })
             suggestionsList.appendChild(li)
         })
